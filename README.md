@@ -127,6 +127,19 @@ console.log(canWatchRatedR);
 
 ```
 
+`map` returns a brand new array the same length as the first. Each element is passed into the callback. Whatever is returned from the callback at each iteration is what goes into that index of the new array.
+
+```
+const cardedMoviePatrons = moviePatrons.map(patron => {
+  patron.canWatchRatedR = patron.age >= 17;
+  return patron;
+});
+
+console.log('Carded Movie Patrons: ');
+console.log(cardedMoviePatrons);
+
+```
+
 ## Node.js
 
 #### Learning Objectives
@@ -149,7 +162,7 @@ console.log(canWatchRatedR);
 
 "In modern web applications, there is constant back-and-forth communication between the visuals displayed on the user's _browser_ (**the front end**) and the data and logic stored on the _server_ (**the backend**) - slide deck
 
-![The Client Server Model]('./Client-Server-Model.png')
+![The Client Server Model](Images/Client-Server-Model.png)
 
 ###### So, what is Node.js?
 

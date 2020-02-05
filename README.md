@@ -140,6 +140,227 @@ console.log(cardedMoviePatrons);
 
 ```
 
+###### Template Literal
+
+"Template literals are string literals allowing embedded expressions. You can use multi-line strings and striing interpolation features with them.... Template literals are enclosed by the backtick (``), also known as the grave accent character, instead of double or single quotes."
+
+```
+'use strict';
+
+const arya = {
+  first: 'Arya',
+  last: 'Stark',
+  origin: 'Winterfell',
+  allegiance: 'House Stark'
+};
+
+const greeting = `My name is ${arya.first}!
+I am loyal to ${arya.allegiance}.`;
+
+console.log(greeting);
+// prints:
+// My name is Arya!
+// I am loyal to House Stark.
+
+```
+
+###### For Of
+
+"The `for... of` statement creates a loop iterating over iterable objects; including, built-in `String`, `Array`, array-like objects (e.g. `arguments` or `NodeList`), `TypedArray`, `Map`, `Set`, and user-defined iterables. It invokes a customer iteration hook with statements to be executed for the value of each distinct property of the object."
+
+```
+// Using arrays
+const songsArr = ['Bad Guy', 'Old Town Road', '7 Rings'];
+
+for (let i = 0; i < songsArr.length; ++i) {
+  const value = songsArr[i];
+  console.log(value);
+}
+
+songsArr.forEach(value => {
+  console.log(value);
+});
+
+for (const value of songsArr) {
+  console.log(value);
+}
+// Output:
+// Bad Guy
+// Old Town Road
+// 7 Rings
+
+// Using strings
+const name = 'Spencer';
+for (const letter of name) {
+  console.log(letter);
+}
+// Output:
+// S
+// p
+// ...
+
+// Using map
+const songs = new Map([
+  ['Bad Guy', 1],
+  ['Old Town Road', 2]
+]);
+
+for (const [key, value] of songs) {
+  console.log(`${key}'s chart position is ${value}`);
+}
+// Output:
+// Bad Guy's chart position is 1
+// Old Town Road's chart position is 2
+
+const foo = {
+  bar: true,
+  test: false
+};
+
+for (const prop of Object.keys(foo)) {
+  console.log(prop);
+}
+
+```
+
+###### Rest and Spread
+
+Rest
+
+```
+// 1. rest
+const add = (foo, ...nums) => {
+  // console.log(foo);
+  let sum = 0;
+  for (const num of nums) sum += num;
+  return sum;
+};
+
+add(1); // => 1
+add(3, 3); // => 6
+add(1, 1, 4, 5); // => 11
+
+// 2.
+const howManyArgs = (...args) => {
+  return `You passed ${args.length} arguments.`;
+  // template literal!
+};
+
+console.log(howManyArgs(0, 1)); // You have passed 2 arguments.
+console.log(howManyArgs('argument!', null, ['one', 2, 'three'], 4)); // You have passed 4 arguments.
+```
+
+"Spread syntax allows an interable such as an array expression or string to be expanded in places where zero or more arguments (for function calls) or elements (for array literals) are expected, or an object expression to be expanded in places where zero or more key-value pairs (for object literals) are expected."
+
+```
+// 1. spread
+const dragons = ['Drogon', 'Viserion', 'Rhaegal'];
+const weapons = ['dragonglass', ...dragons, 'wildfire'];
+
+console.log(weapons); // what will this output?
+```
+
+###### Object Destructuring
+
+"The destructuring assignment syntax is a JavaScript expression that makes it possible to unpack values from arrays, or properties from objects, into distinct variables."
+
+```
+
+'use strict';
+
+const arya = {
+  name: 'Arya Stark',
+  parents: ['Eddard Stark', 'Catelyn Stark']
+};
+
+const jaime = {
+  name: 'Jaime Lannister',
+  parents: ['Tywin Lannister', 'Joanna Lannister']
+};
+
+// In the past, if we wanted to pull off an object's property we'd have to do something like this:
+
+const aryaName = arya.name;
+const aryaParents = arya.parents;
+
+console.log(aryaName); // prints `"Arya Stark"`
+console.log(aryaParents); // prints `["Eddard Stark", "Catelyn Stark"]`
+
+// Now with ES6 object destructuring syntax, we can do this:
+
+const { name, parents } = jaime;
+
+console.log(name); // prints `"Jaime Lannister"`
+console.log(parents); // prints `["Tywin Lannister", "Joanna Lannister"]`
+
+// We can also rename our destructured properties like so:
+
+const { name: jaimeName } = jaime;
+console.log(jaimeName); // prints `"Jaime Lannister"`
+
+// We can also destructure parameters using the same feature. e.g. previously we might have done something like this:
+
+const logCharacter = character =>
+  console.log(
+    character.name +
+      "'s parents are: " +
+      character.parents[0] +
+      ' and ' +
+      character.parents[1] +
+      '.'
+  );
+
+logCharacter(arya);
+
+// But now we can do this:
+
+const betterLogCharacter = ({ name, parents }) =>
+  console.log(
+    name + "'s parents are: " + parents[0] + ' and ' + parents[1] + '.'
+  );
+
+betterLogCharacter(jaime);
+
+
+```
+
+###### Fetch
+
+"The `Fetch API` provides a JavaScript interface for accessing and manipulating parts of the HTTP pipeline, such as requests and responses. It also provides a global fetch() method that provides an easy, logical way to fetch resources asynchronously across the network.
+....
+The `fetch` specification differs from jQuery.ajax() in three main ways:
+
+1. The Promise returned from fetch() won't reject on HTTP error status even if the response is an HTTP 404 or 500. Instead it will resolve normally (with `ok` status set to false), and it will only reject on network failure or if anything prevented the request from completing.
+2. `fetch()` won't receive cross-site cookies; you can't establish a cross site session using fetch. `Set-Cookie` headers from other sites are silently ignored.
+3. `fetch` won't send cookies, unless you set the _credentials_ init option. (Since 2017 the spec changed the default credentials policy to `same-origin`.)
+
+**Basic fetch request :**
+
+```
+fetch('http://example.com/movies.json')
+  .then((response) => {
+    return response.json();
+  })
+  .then((myJson) => {
+    console.log(myJson);
+  });
+```
+
+**Class Example:**
+
+```
+'use strict';
+
+// MDN on fetch: https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
+
+var queryURL =
+  'https://www.omdbapi.com/?t=space+jam&y=&plot=short&apikey=trilogy';
+
+fetch(queryURL).then(response => response.json().then(console.log));
+
+
+```
+
 ## Node.js
 
 #### Learning Objectives
@@ -368,3 +589,7 @@ When ready to install a package for use pull up the package.json in command line
 npm install [package name] --save
 
 ```
+
+###### **\_\_dirname**
+
+Another node global (like process) which refers to the current directory's pathway
